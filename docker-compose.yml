@@ -1,8 +1,18 @@
 version: '3.4'
 
 services:
-  testproj:
-    image: ${DOCKER_REGISTRY-}testproj
+  webapi:
+    image: ${DOCKER_REGISTRY-}webapi
     build:
       context: .
-      dockerfile: TestProj/Dockerfile
+      dockerfile: WebApi/Dockerfile
+  webauthent:
+    image: ${DOCKER_REGISTRY-}webauthent
+    build:
+      context: .
+      dockerfile: WebAuthent/Dockerfile
+  webmvc:
+    image: ${DOCKER_REGISTRY-}webmvc
+    build:
+      context: .
+      dockerfile: WebMvc/Dockerfile

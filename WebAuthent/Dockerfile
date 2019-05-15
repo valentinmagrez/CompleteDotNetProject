@@ -5,14 +5,14 @@ EXPOSE 443
 
 FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /src
-COPY ["WebAuthent/WebAuthent.csproj", "WebAuthent/"]
-RUN dotnet restore "WebAuthent/WebAuthent.csproj"
+COPY WebAuthent/WebAuthent.csproj WebAuthent/
+RUN dotnet restore WebAuthent/WebAuthent.csproj
 COPY . .
-WORKDIR "/src/WebAuthent"
-RUN dotnet build "WebAuthent.csproj" -c Release -o /app
+WORKDIR /src/WebAuthent
+RUN dotnet build WebAuthent.csproj -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish "WebAuthent.csproj" -c Release -o /app
+RUN dotnet publish WebAuthent.csproj -c Release -o /app
 
 FROM base AS final
 WORKDIR /app
