@@ -5,6 +5,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_KESTREL_CERTIFICATE_PASSWORD=1234
       - ASPNETCORE_HTTPS_PORT=54000
     ports:
       - "55000:80"

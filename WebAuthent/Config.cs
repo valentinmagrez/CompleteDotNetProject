@@ -7,7 +7,20 @@ namespace WebAuthent
     {
         public static IEnumerable<Client> GetClients()
         {
-            return new List<Client>();
+            return new List<Client>
+            {
+                new Client
+                {
+                    ClientId = "webmvcclient",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    AllowedScopes = { "testApi" }
+                }
+            };
         }
 
         public static IEnumerable<ApiResource> GetApiResources()

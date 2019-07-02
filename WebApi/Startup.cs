@@ -30,8 +30,8 @@ namespace WebApi
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = "http://localhost:5003";
-                    options.RequireHttpsMetadata = false;
+                    options.Authority = "https://webauthent:443";
+                    options.RequireHttpsMetadata = true;
                     options.ApiName = "testApi";
                 });
         }
