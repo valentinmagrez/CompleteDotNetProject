@@ -12,20 +12,15 @@ namespace WebMvc.Pages
     {
         public async Task OnGet()
         {
-            var handler = new HttpClientHandler
-            {
-                ClientCertificateOptions = ClientCertificateOption.Manual,
-                ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) => true
-            };
-            var token = await ContactAuthentServ(handler);
+            var token = await ContactAuthentServ();
             if (token is null) return;
             
-            var client = new HttpClient(handler)
+            var client = new HttpClient
             {
                 DefaultRequestHeaders = { Accept = { new MediaTypeWithQualityHeaderValue("application/json") } },
             };
             client.SetBearerToken(token);
-            var response = await client.GetAsync("https://webapi:443/api/values");
+            var response = await client.GetAsync("http://webapi:80/api/values");
             if (!response.IsSuccessStatusCode)
             {
                 Console.WriteLine(response.StatusCode);
@@ -37,15 +32,16 @@ namespace WebMvc.Pages
             }
         }
 
-        private static async Task<string> ContactAuthentServ(HttpClientHandler handler)
+        private static async Task<string> ContactAuthentServ()
         {
-            var client = new HttpClient(handler);
+            var client = new HttpClient();
             var disco = await client.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest{
-                Address = "https://webauthent:443",
+                Address = "http://webauthent:80",
                 Policy =
                 {
                     ValidateIssuerName = false,
-                    ValidateEndpoints = false
+                    ValidateEndpoints = false,
+                    RequireHttps = false
                 }
             });
             if (disco.IsError)

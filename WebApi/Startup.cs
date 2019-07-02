@@ -30,8 +30,8 @@ namespace WebApi
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = "https://webauthent:443";
-                    options.RequireHttpsMetadata = true;
+                    options.Authority = "http://webauthent:80";
+                    options.RequireHttpsMetadata = false;
                     options.ApiName = "testApi";
                 });
         }
@@ -48,8 +48,7 @@ namespace WebApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-            app.UseHttpsRedirection();
+            
             app.UseAuthentication();
             app.UseMvc();
         }
